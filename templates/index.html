@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kaltech Hottest - Photo Comparison</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <script src="{{ url_for('static', filename='scripts.js') }}" defer></script>
+</head>
+<body>
+    <header>
+        <h1>Kaltech Hottest</h1>
+        <nav>
+            <a href="/">Home</a>
+            <a href="/upload">Upload Photo</a>
+        </nav>
+    </header>
+
+    <main>
+        <section class="miss-kaltech">
+            <h2>Miss Kaltech</h2>
+            {% if top_photo %}
+                <div class="photo-card">
+                    <img src="{{ url_for('uploaded_file', filename=top_photo.filename) }}" alt="{{ top_photo.filename }}">
+                    <p>Votes: {{ top_photo.votes }}</p>
+                </div>
+            {% else %}
+                <p>No photos available for "Miss Kaltech".</p>
+            {% endif %}
+        </section>
+
+        <section class="photo-comparison">
+            <h2>Compare Photos</h2>
+            <div class="photo-card">
+                <img src="{{ url_for('uploaded_file', filename=photo1.filename) }}" alt="{{ photo1.filename }}">
+                <form action="/vote/{{ photo1.id }}" method="post">
+                    <button type="submit">Vote for this</button>
+                </form>
+            </div>
+            <div class="photo-card">
+                <img src="{{ url_for('uploaded_file', filename=photo2.filename) }}" alt="{{ photo2.filename }}">
+                <form action="/vote/{{ photo2.id }}" method="post">
+                    <button type="submit">Vote for this</button>
+                </form>
+            </div>
+            <form action="/vote/none" method="post">
+                <button type="submit">Neither of them</button>
+            </form>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 Kaltech Hottest. All rights reserved.</p>
+    </footer>
+</body>
+</html>
